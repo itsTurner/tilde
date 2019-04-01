@@ -1,0 +1,28 @@
+// Variables are defined with the key `=`
+apples = 3;
+oranges = 4;
+
+// Lambda expressions are defined with parameters `()` and expression `{}`
+(){
+  // Operation assignments include `+=`, `-=`, `*=`, `/=`, `%=`, and `^=`
+  apples *= 2;
+  oranges /= 2;
+}
+
+// Functions are defined as variables assigned to lambda expressions
+fruits = (){
+  // Return statement is defined by `<<`
+  // Standard: Returned arithmetic operations are parenthesized
+  << (apples + oranges);
+}
+
+// Assignments can be grouped
+(blend, tart) = (
+  (){ << (apples * oranges) }, // Assigned to `blend`
+  (){ << (oranges % apples) } // Assigned to `tart`
+)
+
+// Bitwise operations
+theta = 6;
+theta <<* 2 // 24;
+theta >>* 1 // 12;
