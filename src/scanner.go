@@ -48,7 +48,7 @@ func (s Scanner) Advance() string {
 }
 
 func (s Scanner) AddTokenNil(ttype TokenType) {
-  AddToken(ttype, nil)
+  s.AddToken(ttype, nil)
 }
 
 func (s Scanner) AddToken(ttype TokenType, literal interface{}) {
