@@ -11,7 +11,7 @@ type Scanner struct {
 func (s Scanner) ScanTokens() []Token {
   s.Line = 1
 
-  for !IsAtEnd() {
+  for !s.IsAtEnd() {
     s.Start = s.Current
     ScanToken()
   }
