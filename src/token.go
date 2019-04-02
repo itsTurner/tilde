@@ -9,6 +9,6 @@ type Token struct {
   Line int
 }
 
-func (tok Token) ToString() {
+func (tok Token) ToString() string {
   return fmt.Sprintf("%v %s %v", tok.Type, tok.Lexeme, tok.Literal)
 }
