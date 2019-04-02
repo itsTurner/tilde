@@ -16,7 +16,7 @@ func (s Scanner) ScanTokens() []Token {
     ScanToken()
   }
 
-  append(s.Tokens, Token{EOF , "", null, line})
+  s.Tokens = append(s.Tokens, Token{EOF , "", null, line})
   return s.Tokens
 }
 
