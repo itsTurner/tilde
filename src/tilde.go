@@ -51,7 +51,7 @@ func (t Tilde) RunFile(path string) {
   data := string(dat[:])
   t.Run(data)
 
-  if t.HadError os.Exit(65)
+  if t.HadError { os.Exit(65) }
 }
 
 func (t Tilde) RunPrompt() {
