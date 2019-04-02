@@ -13,10 +13,10 @@ func (s Scanner) ScanTokens() []Token {
 
   for !s.IsAtEnd() {
     s.Start = s.Current
-    ScanToken()
+    s.ScanToken()
   }
 
-  s.Tokens = append(s.Tokens, Token{EOF , "", null, line})
+  s.Tokens = append(s.Tokens, Token{EOF , "", nil, s.Line})
   return s.Tokens
 }
 
@@ -26,28 +26,32 @@ func (s Scanner) IsAtEnd() bool {
 
 func (s Scanner) ScanToken() {
   c := s.Advance()
-  switch c {
-  case '(': s.AddToken(LEFT_PAREN); break
-  case ')': s.AddToken(RIGHT_PAREN); break
-  case '{': s.AddToken(LEFT_BRACE); break
-  case '}': s.AddToken(RIGHT_BRACE); break
-  case ',': s.AddToken(COMMA); break
-  case '.': s.AddToken(DOT); break
-  case '-': s.AddToken(MINUS); break
-  case '+': s.AddToken(PLUS); break
-  case ';': s.AddToken(SEMICOLON); break
-  case '*': s.AddToken(STAR); break
+  switch []rune(c)[0] {
+  case '(': s.AddTokenNil(LEFT_PAREN); break
+  case ')': s.AddTokenNil(RIGHT_PAREN); break
+  case '{': s.AddTokenNil(LEFT_BRACE); break
+  case '}': s.AddTokenNil(RIGHT_BRACE); break
+  case ',': s.AddTokenNil(COMMA); break
+  case '.': s.AddTokenNil(DOT); break
+  case '-': s.AddTokenNil(MINUS); break
+  case '+': s.AddTokenNil(PLUS); break
+  case ';': s.AddTokenNil(SEMICOLON); break
+  case '*': s.AddTokenNil(STAR); break
   default:
     tilde.Error(s.Line, "Unexpected character."); break
   }
 }
 
-func (s Scanner) Advance() char {
+func (s Scanner) Advance() string {
   s.Current++
   return string([]rune(s.Source)[s.Current-1])
 }
 
+func (s Scanner) AddTokenNil(ttype TokenType) {
+  AddToken(ttype, nil)
+}
+
 func (s Scanner) AddToken(ttype TokenType, literal interface{}) {
   text := s.Source[s.Start:s.Current]
-  append(s.Tokens, Token{ttype, text, literal, s.Line})
+  s.Tokens = append(s.Tokens, Token{ttype, text, literal, s.Line})
 }
