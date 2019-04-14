@@ -41,7 +41,7 @@ func (t Tilde) Error(line int, message string) {
 }
 
 func (t Tilde) Report(line int, where string, message string) {
-  str := fmt.Sprintf("[Line %s] Error%s: %s\n", string(line), where, message)
+  str := fmt.Sprintf("[Line %d] Error%s: %s\n", line, where, message)
   fmt.Fprintf(os.Stderr, str)
   t.HadError = true
 }
