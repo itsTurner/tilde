@@ -8,8 +8,9 @@ type Scanner struct {
   Line int
 }
 
-func (s Scanner) ScanTokens() []Token {
+func (s *Scanner) ScanTokens() []Token {
   s.Line = 1
+  s.Current = 1
 
   for !s.IsAtEnd() {
     s.Start = s.Current
@@ -20,11 +21,11 @@ func (s Scanner) ScanTokens() []Token {
   return s.Tokens
 }
 
-func (s Scanner) IsAtEnd() bool {
+func (s *Scanner) IsAtEnd() bool {
   return s.Current >= len(s.Source)
 }
 
-func (s Scanner) ScanToken() {
+func (s *Scanner) ScanToken() {
   c := s.Advance()
   switch []rune(c)[0] {
   case '(': s.AddTokenNil(LEFT_PAREN); break
@@ -42,16 +43,16 @@ func (s Scanner) ScanToken() {
   }
 }
 
-func (s Scanner) Advance() string {
+func (s *Scanner) Advance() string {
   s.Current++
   return string([]rune(s.Source)[s.Current-1])
 }
 
-func (s Scanner) AddTokenNil(ttype TokenType) {
+func (s *Scanner) AddTokenNil(ttype TokenType) {
   s.AddToken(ttype, nil)
 }
 
-func (s Scanner) AddToken(ttype TokenType, literal interface{}) {
+func (s *Scanner) AddToken(ttype TokenType, literal interface{}) {
   text := s.Source[s.Start:s.Current]
   s.Tokens = append(s.Tokens, Token{ttype, text, literal, s.Line})
 }
