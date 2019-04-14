@@ -41,7 +41,8 @@ func (t Tilde) Error(line int, message string) {
 }
 
 func (t Tilde) Report(line int, where string, message string) {
-  fmt.Println("[Line %i] Error%s: %s", line, where, message)
+  str := fmt.Sprintf("[Line %s] Error%s: %s\n", string(line), where, message)
+  fmt.Fprintf(os.Stderr, str)
   t.HadError = true
 }
 
@@ -65,7 +66,7 @@ func (t Tilde) RunPrompt() {
 }
 
 func (t Tilde) Run(source string) {
-  scanner := Scanner{source}
+  scanner := Scanner{Source: source}
   tokens := scanner.ScanTokens()
 
   for _, token := range(tokens) {
