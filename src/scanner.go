@@ -38,6 +38,10 @@ func (s *Scanner) ScanToken() {
   case '+': s.AddTokenNil(PLUS); break
   case ';': s.AddTokenNil(SEMICOLON); break
   case '*': s.AddTokenNil(STAR); break
+  case '!': if s.Match("=") {s.AddTokenNil(BANG_EQUAL)} else {s.AddTokenNil(BANG)}; break
+  case '=': if s.Match("=") {s.AddTokenNil(EQUAL_EQUAL)} else {s.AddTokenNil(EQUAL)}; break
+  case '<': if s.Match("=") {s.AddTokenNil(LESS_EQUAL)} else {s.AddTokenNil(LESS)}; break
+  case '>': if s.Match("=") {s.AddTokenNil(GREATER_EQUAL)} else {s.AddTokenNil(GREATER)}; break
   default:
     tilde.Error(s.Line, "Unexpected character."); break
   }
@@ -55,4 +59,11 @@ func (s *Scanner) AddTokenNil(ttype TokenType) {
 func (s *Scanner) AddToken(ttype TokenType, literal interface{}) {
   text := s.Source[s.Start:s.Current]
   s.Tokens = append(s.Tokens, Token{ttype, text, literal, s.Line})
+}
+
+func (s *Scanner) Match(expected string) bool {
+  if (s.IsAtEnd()) || (string(s.Source[s.Current]) != expected) { return false }
+
+  s.Current++
+  return true
 }
