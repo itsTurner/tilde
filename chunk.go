@@ -8,8 +8,8 @@ type Chunk struct {
 	code []Instruction
 }
 
-func (c Chunk) Write(b Instruction) {
-	c.code = append(c.code, b)
+func (chunk *Chunk) Write(instruction Instruction) {
+	chunk.code = append(chunk.code, instruction)
 }
 
 // Opcode enumeration
